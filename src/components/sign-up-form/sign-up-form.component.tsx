@@ -8,9 +8,10 @@ import FormInput from 'components/form-input/form-input.component';
 import Button from 'components/button/button.component';
 import { errorGuard } from '../../guards/error-guard';
 
-import type { SignUpFormFields } from 'types/sign-up-form-fields';
+import type { SignUpFormFields } from 'types/authentication';
 
 import './sign-up-form.styles.scss';
+import { FirebaseErr } from 'types/firebase-error';
 
 const defaultFormFields: SignUpFormFields = {
   displayName: '',
@@ -51,7 +52,7 @@ const SignUpForm = () => {
         (await createUserDocumentFromAuth(response.user, { displayName }));
       resetFormFields();
     } catch (err) {
-      const error = err as { code: string };
+      const error = err as FirebaseErr;
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use');
       }

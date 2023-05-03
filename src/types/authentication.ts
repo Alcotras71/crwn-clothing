@@ -4,3 +4,8 @@ export interface SignUpFormFields {
   password: string;
   confirmPassword: string;
 }
+
+export type SignInFormFields = Omit<
+  SignUpFormFields,
+  'confirmPassword' | 'displayName'
+>;
