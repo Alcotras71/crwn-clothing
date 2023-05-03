@@ -25,6 +25,7 @@
       "routes/*": [ "routes/*" ],
       "types/*": [ "types/*" ],
       "assets/*": [ "assets/*" ],
+      "utils/*": [ "utils/*" ],
     }
   },
   "include": [
