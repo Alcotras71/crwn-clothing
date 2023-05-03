@@ -1,5 +1,3 @@
-import React from 'react'
-
 import Directory from 'components/directory/directory.component'
 
 import type { Category } from 'types/category'
@@ -33,7 +31,11 @@ const Home = () => {
     },
   ]
 
-  return <Directory categories={categories} />
+  return (
+    <div>
+      <Directory categories={categories} />
+    </div>
+  )
 }
 
 export default Home
