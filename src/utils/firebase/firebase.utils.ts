@@ -1,3 +1,4 @@
+import firebase from 'firebase/compat';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
@@ -6,10 +7,15 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-import firebase from 'firebase/compat';
+import { NextOrObserver } from '@firebase/auth';
+
 import { errorGuard } from '../../guards/error-guard';
+
+export type UserInfo = firebase.UserInfo;
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAfS6K_8dLJVL21fC5URicWbI1BtE19uT0',
@@ -38,7 +44,7 @@ export const signInWithGoogleRedirect = () =>
 export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async <T>(
-  userAuth: firebase.UserInfo,
+  userAuth: UserInfo,
   additionalInformation?: T
 ) => {
   if (!userAuth) return;
@@ -82,3 +88,9 @@ export const signInAuthUserWithEmailAndPassword = async (
 
   return signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = async () => signOut(auth);
+
+export const onAuthStateChangedListener = (
+  callback: NextOrObserver<UserInfo | null>
+) => onAuthStateChanged(auth, callback);

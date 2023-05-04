@@ -9,9 +9,9 @@ import Button from 'components/button/button.component';
 import { errorGuard } from '../../guards/error-guard';
 
 import type { SignUpFormFields } from 'types/authentication';
+import type { FirebaseErr } from 'types/firebase-error';
 
 import './sign-up-form.styles.scss';
-import { FirebaseErr } from 'types/firebase-error';
 
 const defaultFormFields: SignUpFormFields = {
   displayName: '',
@@ -48,8 +48,9 @@ const SignUpForm = () => {
         email,
         password
       );
-      response &&
-        (await createUserDocumentFromAuth(response.user, { displayName }));
+      if (response?.user) {
+        await createUserDocumentFromAuth(response.user, { displayName });
+      }
       resetFormFields();
     } catch (err) {
       const error = err as FirebaseErr;
