@@ -1,12 +1,23 @@
 import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
 
-import './button.styles.scss';
+import {
+  BaseButton,
+  InvertedButton,
+  GoogleSignInButton,
+} from './button.styles';
 
-const BUTTON_TYPE_CLASSES = {
+export const BUTTON_TYPE_CLASSES = {
   google: 'google-sign-in',
   inverted: 'inverted',
   default: 'default',
 };
+
+const getButton = (buttonType = BUTTON_TYPE_CLASSES.default) =>
+  ({
+    [BUTTON_TYPE_CLASSES.default]: BaseButton,
+    [BUTTON_TYPE_CLASSES.google]: GoogleSignInButton,
+    [BUTTON_TYPE_CLASSES.inverted]: InvertedButton,
+  }[buttonType]);
 
 type Props = PropsWithChildren<
   {
@@ -19,14 +30,9 @@ const ButtonComponent: FC<Props> = ({
   buttonType = 'default',
   ...buttonProps
 }) => {
-  return (
-    <button
-      className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}
-      {...buttonProps}
-    >
-      {children}
-    </button>
-  );
+  const CustomButton = getButton(BUTTON_TYPE_CLASSES[buttonType]);
+
+  return <CustomButton {...buttonProps}>{children}</CustomButton>;
 };
 
 export default ButtonComponent;
