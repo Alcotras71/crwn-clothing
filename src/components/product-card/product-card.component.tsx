@@ -3,7 +3,7 @@ import { FC, useContext } from 'react';
 import Button from 'components/button/button.component';
 import { CartContext } from 'context/cart.context';
 
-import type { Product } from 'types/product';
+import type { Product } from 'types/categories';
 
 import './product-card.styles.scss';
 

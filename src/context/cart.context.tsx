@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import { CartItemType } from 'types/cart-item';
-import { Product } from 'types/product';
+import { Product } from 'types/categories';
 
 type CartContextType = {
   isCartOpen: boolean;
