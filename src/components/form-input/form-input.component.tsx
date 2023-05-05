@@ -1,6 +1,11 @@
 import { FC, InputHTMLAttributes } from 'react';
 
-import './form-input.styles.scss';
+import './form-input.styles';
+import {
+  FormInputLabel,
+  Group,
+  Input,
+} from 'components/form-input/form-input.styles';
 
 type Props = {
   label?: string;
@@ -8,18 +13,14 @@ type Props = {
 
 const FormInputComponent: FC<Props> = ({ label, ...inputProps }) => {
   return (
-    <div className="group">
-      <input className="form-input" {...inputProps} />
+    <Group>
+      <Input {...inputProps} />
       {label && (
-        <label
-          className={`${
-            (inputProps.value as string).length ? 'shrink' : ''
-          } form-input-label`}
-        >
+        <FormInputLabel shrink={!!(inputProps.value as string).length}>
           {label}
-        </label>
+        </FormInputLabel>
       )}
-    </div>
+    </Group>
   );
 };
 
