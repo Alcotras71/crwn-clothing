@@ -5,7 +5,12 @@ import { CartContext } from 'context/cart.context';
 
 import type { Product } from 'types/categories';
 
-import './product-card.styles.scss';
+import {
+  Name,
+  ProductCardContainer,
+  ProductCardFooter,
+  Price,
+} from 'components/product-card/product-card.styles';
 
 type Props = {
   product: Product;
@@ -19,16 +24,16 @@ const ProductCard: FC<Props> = ({ product }) => {
   const handleAddItemToCart = () => addItemToCart(product);
 
   return (
-    <div className="product-card-container">
+    <ProductCardContainer>
       <img src={imageUrl} alt={`${name}`} />
-      <div className="footer">
-        <span className="name">{name}</span>
-        <span className="price">{price}</span>
-      </div>
+      <ProductCardFooter>
+        <Name>{name}</Name>
+        <Price>{price}</Price>
+      </ProductCardFooter>
       <Button buttonType="inverted" onClick={handleAddItemToCart}>
         Add to card
       </Button>
-    </div>
+    </ProductCardContainer>
   );
 };
 
