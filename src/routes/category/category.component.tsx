@@ -6,7 +6,10 @@ import ProductCard from 'components/product-card/product-card.component';
 
 import type { CategoriesMap, Product } from 'types/categories';
 
-import './category.styles.scss';
+import {
+  CategoryContainer,
+  CategoryTitle,
+} from 'routes/category/category.styles';
 
 const Category = () => {
   const { category } = useParams();
@@ -23,13 +26,13 @@ const Category = () => {
 
   return (
     <Fragment>
-      <h2 className="category-title">{category}</h2>
-      <div className="category-container">
+      <CategoryTitle>{category}</CategoryTitle>
+      <CategoryContainer>
         {products &&
           products.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
-      </div>
+      </CategoryContainer>
     </Fragment>
   );
 };

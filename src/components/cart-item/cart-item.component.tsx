@@ -2,7 +2,11 @@ import { FC } from 'react';
 
 import type { CartItemType } from 'types/cart-item';
 
-import './cart-item.styles.scss';
+import {
+  CartItemContainer,
+  ItemDetails,
+  Name,
+} from 'components/cart-item/cart-item.styles';
 
 type Props = {
   cartItem: CartItemType;
@@ -11,15 +15,15 @@ type Props = {
 const CartItem: FC<Props> = ({ cartItem }) => {
   const { name, quantity, imageUrl, price } = cartItem;
   return (
-    <div className="cart-item-container">
+    <CartItemContainer>
       <img src={imageUrl} alt={`${name}`} />
-      <div className="item-details">
-        <span className="name">{name}</span>
-        <span className="price">
+      <ItemDetails>
+        <Name>{name}</Name>
+        <span>
           {quantity} x ${price}
         </span>
-      </div>
-    </div>
+      </ItemDetails>
+    </CartItemContainer>
   );
 };
 
