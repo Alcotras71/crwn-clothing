@@ -9,9 +9,9 @@ import {
 } from 'components/cart-icon/cart-icon.styles';
 
 const CartIcon = () => {
-  const { setIsCartOpen, cartCount } = useContext(CartContext);
+  const { setIsCartOpen, cartCount, isCartOpen } = useContext(CartContext);
 
-  const toggleIsCartOpen = () => setIsCartOpen(prevValue => !prevValue);
+  const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen);
 
   return (
     <CartIconContainer onClick={toggleIsCartOpen}>
