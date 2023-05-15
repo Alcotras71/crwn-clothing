@@ -14,16 +14,16 @@ import {
 
 const Category = () => {
   const { category } = useParams();
+  console.log('render/re-rendering category component');
   const categoriesMap = useSelector(selectCategoriesMap);
 
   const [products, setProducts] = useState<Product[]>(
-    (categoriesMap as CategoriesMap)[category as keyof CategoriesMap]
+    categoriesMap[category as keyof CategoriesMap]
   );
 
   useEffect(() => {
-    setProducts(
-      (categoriesMap as CategoriesMap)[category as keyof CategoriesMap]
-    );
+    console.log('effect fired calling setProducts');
+    setProducts(categoriesMap[category as keyof CategoriesMap]);
   }, [category, categoriesMap]);
 
   return (

@@ -12,3 +12,9 @@ export interface CategoriesMap {
   sneakers: Product[];
   womens: Product[];
 }
+
+export interface CategoryInterface {
+  imageUrl: string;
+  items: Product[];
+  title: string;
+}
