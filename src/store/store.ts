@@ -11,7 +11,7 @@ import type { RootState } from 'types/store-types';
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
   storage,
-  blacklist: ['user'],
+  whitelist: ['cart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

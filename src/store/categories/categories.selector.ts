@@ -19,3 +19,8 @@ export const selectCategoriesMap = createSelector(
       return acc;
     }, {} as { [key: string]: Product[] }) as unknown as CategoriesMap
 );
+
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  categoriesSlice => categoriesSlice.isLoading
+);
