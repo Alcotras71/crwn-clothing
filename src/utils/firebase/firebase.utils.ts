@@ -23,6 +23,7 @@ import {
 import { NextOrObserver } from '@firebase/auth';
 
 import { errorGuard } from 'guards/error-guard';
+import { CategoryInterface } from 'types/categories';
 
 export type UserInfo = firebase.UserInfo;
 
@@ -75,7 +76,9 @@ export const getCategoriesAndDocuments = async () => {
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+  return querySnapshot.docs.map(docSnapshot =>
+    docSnapshot.data()
+  ) as CategoryInterface[];
 };
 
 export const createUserDocumentFromAuth = async <T>(

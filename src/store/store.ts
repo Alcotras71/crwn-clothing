@@ -1,36 +1,14 @@
-import {
-  compose,
-  createStore,
-  applyMiddleware,
-  AnyAction,
-  MiddlewareAPI,
-  Dispatch,
-  Middleware,
-} from 'redux';
-// import logger from 'redux-logger';
+import { compose, createStore, applyMiddleware, Middleware } from 'redux';
 import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import { rootReducer } from './root-reducer';
 
-import type { RootReducerType } from 'types/root-reducer-type';
+import type { RootState } from 'types/store-types';
 
-const loggerMiddleware: Middleware =
-  (store: MiddlewareAPI) => (next: Dispatch) => (action: AnyAction) => {
-    if (!action.type) {
-      return next(action);
-    }
-
-    console.log('type: ', action.type);
-    console.log('payload: ', action.payload);
-    console.log('currentState: ', store.getState());
-
-    next(action);
-
-    console.log('next state: ', store.getState());
-  };
-
-const persistConfig: PersistConfig<RootReducerType> = {
+const persistConfig: PersistConfig<RootState> = {
   key: 'root',
   storage,
   blacklist: ['user'],
@@ -38,9 +16,19 @@ const persistConfig: PersistConfig<RootReducerType> = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleWares = [loggerMiddleware];
+const middleWares = [
+  process.env.NODE_ENV !== 'production' && logger,
+  thunk,
+].filter(Boolean) as Middleware[];
 
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+const composeEnhancer =
+  (process.env.NODE_ENV !== 'production' &&
+    window &&
+    //@ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 export const store = createStore(
   persistedReducer,
