@@ -23,7 +23,8 @@
       "assets/*": ["assets/*"],
       "utils/*": ["utils/*"],
       "context/*": ["context/*"],
-      "guards/*": ["guards/*"]
+      "guards/*": ["guards/*"],
+      "store/*": ["store/*"]
     }
   },
   "include": ["src"]
