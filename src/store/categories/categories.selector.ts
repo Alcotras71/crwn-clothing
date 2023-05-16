@@ -1,10 +1,9 @@
 import { createSelector } from 'reselect';
 
-import { rootReducer } from 'store/root-reducer';
-
 import type { CategoriesMap, Product } from 'types/categories';
+import type { RootReducerType } from "types/root-reducer-type";
 
-const selectCategoryReducer = (state: ReturnType<typeof rootReducer>) =>
+const selectCategoryReducer = (state: RootReducerType) =>
   state.categories;
 
 export const selectCategories = createSelector(
