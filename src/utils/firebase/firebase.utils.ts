@@ -27,6 +27,8 @@ import { CategoryInterface } from 'types/categories';
 
 export type UserInfo = firebase.UserInfo;
 
+export type UserInfoWithId = { id?: string } & UserInfo;
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAfS6K_8dLJVL21fC5URicWbI1BtE19uT0',
   authDomain: 'crwn-clothing-db-bd9a1.firebaseapp.com',
@@ -106,7 +108,7 @@ export const createUserDocumentFromAuth = async <T>(
     }
   }
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (
@@ -132,3 +134,16 @@ export const signOutUser = async () => signOut(auth);
 export const onAuthStateChangedListener = (
   callback: NextOrObserver<UserInfo | null>
 ) => onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = (): Promise<UserInfo | null> => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      userAuth => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
