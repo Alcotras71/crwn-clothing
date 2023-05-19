@@ -1,6 +1,7 @@
-import { UserInfo, UserInfoWithId } from 'utils/firebase/firebase.utils';
 import { createAction } from 'utils/reducer/reducer.utils';
 import { USER_ACTION_TYPES } from './user.types';
+
+import type { UserAdditionalInfo, UserInfo, UserInfoWithId } from 'types/user';
 
 export const setCurrentUser = (user: UserInfo | null) =>
   createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user);
@@ -19,3 +20,32 @@ export const signInSuccess = (user: UserInfoWithId | null) =>
 
 export const signInFailed = (error: unknown) =>
   createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error);
+
+export const signUpStart = (
+  email: string,
+  password: string,
+  displayName: string
+) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_START, {
+    email,
+    password,
+    displayName,
+  });
+
+export const signUpSuccess = (
+  user: UserInfo,
+  additionalDetails: UserAdditionalInfo
+) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails });
+
+export const signUpFailed = (err: unknown) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, err);
+
+export const signOutStart = () =>
+  createAction(USER_ACTION_TYPES.SIGN_OUT_START);
+
+export const signOutSuccess = () =>
+  createAction(USER_ACTION_TYPES.SIGN_OUT_SUCCESS);
+
+export const signOutFailed = (err: unknown) =>
+  createAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, err);

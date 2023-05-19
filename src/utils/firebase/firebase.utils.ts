@@ -1,4 +1,3 @@
-import firebase from 'firebase/compat';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
@@ -23,11 +22,9 @@ import {
 import { NextOrObserver } from '@firebase/auth';
 
 import { errorGuard } from 'guards/error-guard';
-import { CategoryInterface } from 'types/categories';
 
-export type UserInfo = firebase.UserInfo;
-
-export type UserInfoWithId = { id?: string } & UserInfo;
+import type { CategoryInterface } from 'types/categories';
+import type { UserAdditionalInfo, UserInfo } from 'types/user';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAfS6K_8dLJVL21fC5URicWbI1BtE19uT0',
@@ -83,9 +80,9 @@ export const getCategoriesAndDocuments = async () => {
   ) as CategoryInterface[];
 };
 
-export const createUserDocumentFromAuth = async <T>(
+export const createUserDocumentFromAuth = async (
   userAuth: UserInfo,
-  additionalInformation?: T
+  additionalInformation?: UserAdditionalInfo
 ) => {
   if (!userAuth) return;
 

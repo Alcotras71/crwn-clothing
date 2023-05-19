@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -11,8 +12,8 @@ import { errorGuard } from 'guards/error-guard';
 import type { SignUpFormFields } from 'types/authentication';
 import type { FirebaseErr } from 'types/firebase-error';
 
-import './sign-up-form.styles';
 import { FormContainer } from 'components/sign-up-form/sign-up-form.styles';
+import { signUpStart } from 'store/user/user.action';
 
 const defaultFormFields: SignUpFormFields = {
   displayName: '',
@@ -22,6 +23,8 @@ const defaultFormFields: SignUpFormFields = {
 };
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
+
   const [formFields, setFormFields] =
     useState<SignUpFormFields>(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
@@ -45,13 +48,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const response = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      if (response?.user) {
-        await createUserDocumentFromAuth(response.user, { displayName });
-      }
+      dispatch(signUpStart(email, password, displayName));
       resetFormFields();
     } catch (err) {
       const error = err as FirebaseErr;
